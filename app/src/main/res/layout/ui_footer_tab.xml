@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="54dp"
+              android:padding="4dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tab_pic"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:text="nihao"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tab_text"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:text="导 航"
+        android:textSize="14sp"/>
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--  主色  -->
+    <color name="fontBlack">#000000</color>
+    <color name="fontGray">#808080</color>
+    <color name="backgroundBlack">#212124</color>
+    <color name="gold">#DBB86B</color>
+    <color name="red">#F28C48</color>
+    <color name="backgroundGray">#F3F3F3</color>
+    <color name="footerGray">#5b5b5b</color>
+</resources>
