@@ -1,6 +1,7 @@
 package com.qsr.graduationpro.base;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -17,11 +18,15 @@ import butterknife.ButterKnife;
  * Description :Activity基类
  **************************************/
 public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener{
+	protected Message message;
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+		//透到状态栏
+		getWindow().addFlags(67108864);
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
 		setContentView(getLayoutId());
+		ButterKnife.bind(this);
 		initView(savedInstanceState);
 		initData();
 	}
@@ -38,7 +43,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 	}
 
 	public void MyOnClick(View v) {
-		//此处什么都不执行
+		//此处什么都不执行,需要的让子类去实现
 	}
 
 

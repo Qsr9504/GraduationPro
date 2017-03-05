@@ -1,36 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:footer = "http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="splash界面"
-        />
-    <LinearLayout
+    <ImageView
+        android:id="@+id/splash_image"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal">
-    <com.qsr.graduationpro.ui.MyFooterTab
-        android:id="@+id/first"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="55dp"/>
-    <com.qsr.graduationpro.ui.MyFooterTab
-        android:id="@+id/first1"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="55dp"/>
-    <com.qsr.graduationpro.ui.MyFooterTab
-        android:id="@+id/first2"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="55dp"/>
-    <com.qsr.graduationpro.ui.MyFooterTab
-        android:id="@+id/first3"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="55dp"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:src="@mipmap/cover"/>
 </LinearLayout>

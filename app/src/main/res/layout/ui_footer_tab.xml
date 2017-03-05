@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="54dp"
-              android:padding="4dp"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="4dp">
 
-    <TextView
+    <com.qsr.graduationpro.ui.IconFontTextView
         android:id="@+id/tab_pic"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_gravity="center"
-        android:text="nihao"
+        android:text="abc"
         android:textSize="20sp"/>
 
     <TextView
@@ -18,6 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="22dp"
         android:layout_gravity="center"
-        android:text="导 航"
+        android:text="什 么"
         android:textSize="14sp"/>
 </LinearLayout>

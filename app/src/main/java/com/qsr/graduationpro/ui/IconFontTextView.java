@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.qsr.graduationpro.R;
 import com.qsr.graduationpro.app.App;
 
 /**************************************
@@ -34,7 +35,8 @@ public class IconFontTextView extends TextView{
 		iconfont = Typeface.createFromAsset(App.mContext.getAssets(),"iconfont/iconfont.ttf");
 		this.setTypeface(iconfont);
 	}
-	public void changePic(String unicode){
-		//http://blog.csdn.net/huang15984/article/details/53021034
+	public void setIcon(CharSequence text){
+		this.setText(text);
+		this.setTypeface(iconfont);
 	}
 }

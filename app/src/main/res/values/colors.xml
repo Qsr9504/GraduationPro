@@ -9,6 +9,7 @@
     <color name="backgroundBlack">#212124</color>
     <color name="gold">#DBB86B</color>
     <color name="red">#F28C48</color>
-    <color name="backgroundGray">#F3F3F3</color>
+    <color name="backgroundGray">#f3f3f3</color>
     <color name="footerGray">#5b5b5b</color>
+    <color name="white">#ffffff</color>
 </resources>

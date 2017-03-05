@@ -6,9 +6,11 @@ import android.os.Handler;
 import android.support.graphics.drawable.animated.BuildConfig;
 
 import com.qsr.graduationpro.utils.LogUtil;
-import com.qsr.graduationpro.utils.MySPUtil;
+import com.qsr.graduationpro.utils.SPUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import cn.bmob.v3.Bmob;
 
 /**************************************
  * FileName : com.qsr.graduationpro.app
@@ -34,9 +36,10 @@ public class App extends Application {
 	 * 各种工具类的初始化
 	 */
 	private void initUtils() {
+		Bmob.initialize(this, "cbb65ad58b533580a39ffe7f879b388d");
 		EventBus eventBus = EventBus.builder().throwSubscriberException(BuildConfig.DEBUG).build();
-		//初始化SharedPreferences
-		MySPUtil.getInstance();
+		//SharedPreferences初始化
+		SPUtil.init(mContext,"Gpro_config");
 		//log信息是否打印
 		LogUtil.openLog(true);
 		//全局异常捕获处理器

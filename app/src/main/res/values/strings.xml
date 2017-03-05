@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">毕业设计</string>
-    <string name="app_icon">&#xe660;</string>
+    <string name="app_icon">&#xe67e;</string>
+    <!--底部导航栏的图标-->
+    <string name="footer_connections_pic">&#xe67e;</string>
+    <string name="footer_connections_text">人脉</string>
+    <string name="footer_meeting_pic">&#xe67e;</string>
+    <string name="footer_meeting_text">会议</string>
+    <string name="footer_news_pic">&#xe67e;</string>
+    <string name="footer_news_text">新闻</string>
+    <string name="footer_personal_pic">&#xe67e;</string>
+    <string name="footer_personal_text">个人</string>
 </resources>

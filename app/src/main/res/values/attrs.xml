@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--底部导航栏tab的配置-->
+    <declare-styleable name="MyFooterTab">
+        <attr name="tabPic" format="string" />
+        <attr name="tabText" format="string"/>
+        <attr name="tabColor" format="color"/>
+    </declare-styleable>
+</resources>
