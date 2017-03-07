@@ -1,24 +1,19 @@
 package com.qsr.graduationpro.bmobUtils;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.qsr.graduationpro.app.App;
 import com.qsr.graduationpro.app.Constants;
-import com.qsr.graduationpro.mvp.model.data.Action;
 import com.qsr.graduationpro.mvp.model.data.Version;
 import com.qsr.graduationpro.utils.AppUtil;
 import com.qsr.graduationpro.utils.LogUtil;
-import com.qsr.graduationpro.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
 
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.FindListener;
 
 /**************************************
@@ -27,9 +22,10 @@ import cn.bmob.v3.listener.FindListener;
  * Time : 2017/3/5 15:26
  * Description : 本软件的版本更新信息校对
  **************************************/
-public class VersionTool extends baseTool{
+public class VersionTool extends BaseTool{
 	private static VersionTool versionTool;
 	private Integer maxCode;
+
 	//第一层同步
 	public static synchronized VersionTool getInstance() {
 		//第二层同步
@@ -70,7 +66,7 @@ public class VersionTool extends baseTool{
 						}
 					}
 				}
-				EventBus.getDefault().post(action);
+				bmobInterface.BmobCallBack(action);
 			}
 
 			@Override
@@ -78,8 +74,11 @@ public class VersionTool extends baseTool{
 				action.setState(Constants.stateCode.STATE_ERROR);//状态码设置为失败
 				action.setDescribe(s);//设置错误返回信息
 				LogUtil.MyLog_e("版本检测失败:"+s);//打印一下错误信息
-				EventBus.getDefault().post(action);
+
+				//使用接口返回数据
+				bmobInterface.BmobCallBack(action);
 			}
 		});
 	}
+
 }

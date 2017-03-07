@@ -14,6 +14,7 @@ import com.qsr.graduationpro.base.BaseActivity;
 import com.qsr.graduationpro.bmobUtils.VersionTool;
 import com.qsr.graduationpro.mvp.model.data.Action;
 import com.qsr.graduationpro.mvp.model.data.Version;
+import com.qsr.graduationpro.mvp.presenter.SplashPresenter;
 import com.qsr.graduationpro.utils.ActivityManager;
 import com.qsr.graduationpro.utils.LogUtil;
 import com.qsr.graduationpro.utils.SPUtil;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
  * Time : 2017/1/1 22:47
  * Description : 欢迎页面
  * 要求功能：
- * 1.沉浸式标题栏 √
+ * 1.沉浸式标题栏  √
  * 2.首次打开app时，需要进入引导页。之后跳转loginActivity  √
  * 3.开启版本检查时，检查版本信息跳出dialog   √
  * 4.关闭版本检查时，默认三秒后自动进入LoginActivity，点击屏幕立即进入LoginActivity √
@@ -46,6 +47,8 @@ public class SplashActivity extends BaseActivity {
 	private final int ENTER_HOME = 101;
 	private final int DELAY_TIME = 3000;//延迟加载进入页面时间
 	private boolean hasEnter = true;//是否已经进行跳转，防止重复跳转出现bug
+	private Version version;
+	private SplashPresenter splashPresenter;
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -63,28 +66,31 @@ public class SplashActivity extends BaseActivity {
 		return R.layout.activity_spash;
 	}
 
-	private Version version;
-
 	@Override
-	protected void initData() {
-		EventBus.getDefault().register(this);
+	protected void init() {
 		ActivityManager.getInstance().addActivity(this);
 		//检测版本信息
 		LogUtil.MyLog_e("准备版本检测");
 		splashImage.setClickable(false);//设置为不可点击
-		VersionTool.getInstance().goCheck();
+		//初始化一个控制器
+		splashPresenter = new SplashPresenter();
+		//注册
+		splashPresenter.registerPresenterListener(this);
+		//执行访问
+		splashPresenter.requestAction(Constants.eventString.EVENT_VERSION);
 	}
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	public void hasNew(Action action) {
+	//接受返回数据刷新界面
+	@Override
+	protected void notify(Action action) {
 		if (Constants.eventString.EVENT_VERSION.equals(action.getEvent())) {
 			//检测版本  返回信息
 			LogUtil.MyLog_e("界面收到版本消息");
 			if (action.getState() == Constants.stateCode.STATE_SUCCESS) {
 				if (action.getResultData() != null){
-					//没有更新的版本
+					//有更新的版本
 					version = (Version) action.getResultData();
-				showDialog();
+					showDialog();
 				}else {
 					//已经是最新版本
 					ToastUtil.showShort("已经是最新版本");
@@ -109,7 +115,7 @@ public class SplashActivity extends BaseActivity {
 	 */
 	private void enter() {
 		if(hasEnter){
-			isFrist = (boolean) SPUtil.get(Constants.mySP.OPEN_CHECK, true);
+			isFrist = (boolean) SPUtil.get(Constants.mySP.IS_FRIST, true);
 			if (isFrist) {
 				//进入引导页
 				ActivityManager.getInstance().startAct(this, new GuideActivity());
@@ -136,7 +142,7 @@ public class SplashActivity extends BaseActivity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				//下载apk,apk链接地址,downloadUrl
-//				downloadApk(version.getVersionUrl());
+				downloadApk(version.getVersionUrl());
 			}
 		});
 
@@ -160,11 +166,16 @@ public class SplashActivity extends BaseActivity {
 		if ((Boolean) SPUtil.get(Constants.mySP.OPEN_CHECK, true))//默认打开
 			builder.show();
 		else {
+			splashImage.setClickable(true);
 			//延迟三秒登录注册界面
 			handler.sendEmptyMessageDelayed(ENTER_HOME, DELAY_TIME);
 		}
 	}
-
+	//*********************
+	//*********************
+	//*******下载新版本****
+	//********************
+	//********************
 	private void downloadApk(String versionUrl) {
 
 	}
@@ -176,6 +187,5 @@ public class SplashActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		ButterKnife.unbind(this);
-		EventBus.getDefault().unregister(this);
 	}
 }

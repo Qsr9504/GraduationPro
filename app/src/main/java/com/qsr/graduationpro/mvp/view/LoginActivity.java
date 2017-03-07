@@ -2,6 +2,7 @@ package com.qsr.graduationpro.mvp.view;
 
 import com.qsr.graduationpro.R;
 import com.qsr.graduationpro.base.BaseActivity;
+import com.qsr.graduationpro.mvp.model.data.Action;
 
 public class LoginActivity extends BaseActivity {
 
@@ -11,7 +12,12 @@ public class LoginActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void initData() {
+	protected void init() {
+
+	}
+
+	@Override
+	protected void notify(Action action) {
 
 	}
 }

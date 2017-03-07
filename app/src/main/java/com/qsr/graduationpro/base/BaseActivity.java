@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 
+import com.qsr.graduationpro.mvp.model.data.Action;
+import com.qsr.graduationpro.mvp.presenter.IPresenter;
+
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
@@ -17,23 +20,25 @@ import butterknife.ButterKnife;
  * Time : 2017/1/1 22:28
  * Description :Activity基类
  **************************************/
-public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener{
+public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener,IPresenter{
 	protected Message message;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//透到状态栏
-		getWindow().addFlags(67108864);
+		getWindow().addFlags(67108864);//沉浸式开发
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
 		setContentView(getLayoutId());
-		ButterKnife.bind(this);
+		ButterKnife.bind(this);//注入式框架butterknife
 		initView(savedInstanceState);
-		initData();
+		init();
 	}
 
 	protected abstract int getLayoutId();
 
-	protected abstract void initData();
+	protected abstract void init();
+
+	protected abstract void notify(Action action);
 
 	public void initView(Bundle savedInstanceState){}//需要初始化界面数据，恢复上一次数据
 
@@ -46,5 +51,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 		//此处什么都不执行,需要的让子类去实现
 	}
 
-
+	@Override
+	public void presenterCallBack(Action action) {
+		notify(action);//将回调信息返回给notify函数处理
+	}
 }

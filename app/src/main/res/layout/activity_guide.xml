@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.qsr.graduationpro.mvp.view.GuideActivity">
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/guide_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="这里是引导页"/>
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 </LinearLayout>

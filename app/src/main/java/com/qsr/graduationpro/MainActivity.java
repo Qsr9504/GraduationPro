@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.qsr.graduationpro.base.BaseActivity;
+import com.qsr.graduationpro.mvp.model.data.Action;
 
 public class MainActivity extends BaseActivity {
 
@@ -14,7 +15,12 @@ public class MainActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void initData() {
+	protected void init() {
+
+	}
+
+	@Override
+	protected void notify(Action action) {
 
 	}
 }
