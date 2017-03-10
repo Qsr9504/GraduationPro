@@ -33,9 +33,11 @@ public class LoginPresenter extends BasePresenter{
 		if(loginBiz == null){
 			LogUtil.MyLog_e("操！这里是LoginPresenter");
 		}
+		loginBiz.setAction(action);//设置action信息
 		if(Constants.eventString.EVENT_LOGIN.equals(action.getEvent())){
-			loginBiz.setAction(action);//设置action信息
 			loginBiz.doLogin();//执行登录操作
+		}else if(Constants.eventString.EVENT_REGISTER.equals(action.getEvent())){
+			loginBiz.doRegister();
 		}
 	}
 }

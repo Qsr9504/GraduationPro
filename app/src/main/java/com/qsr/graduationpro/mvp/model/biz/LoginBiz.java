@@ -27,4 +27,13 @@ public class LoginBiz extends BaseBiz{
 		//注册当前的监听接口，让父类方法进行回调
 		UserTool.getInstance().registerBmobInterface(LoginBiz.this);
 	}
+	public void doRegister(){
+		User user = (User) action.getRequestData();
+		LogUtil.MyLog_e("申请的用户名" + user.getUsername().toString());
+		LogUtil.MyLog_e("申请的密码" + user.getPassword().toString());
+		//注册当前的监听接口，让父类方法进行回调
+		UserTool.getInstance().registerBmobInterface(LoginBiz.this);
+		//转交给bmob后端云
+		UserTool.getInstance().doRegister(action);
+	}
 }

@@ -72,12 +72,20 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	protected void notify(Action action) {
 		if(Constants.stateCode.STATE_SUCCESS == action.getState()){
-			//如果返回成功
-			LogUtil.MyLog_e("登录界面收到登录成功消息");
+			if(Constants.eventString.EVENT_LOGIN == action.getEvent()){
+				//登录
+				//如果返回成功
+				LogUtil.MyLog_e("登录界面收到登录成功消息");
+			}else if(Constants.eventString.EVENT_REGISTER == action.getEvent()){
+				//注册成功
+				LogUtil.MyLog_e("注册界面收到注册成功消息");
+			}else {
+				LogUtil.MyLog_e("登录注册返回代码有误！检查bmob工具类");
+			}
 			//跳转到主界面
 			ActivityManager.getInstance().startAct(LoginActivity.this, new MainActivity());
 		}else {
-			LogUtil.MyLog_e("界面收到消息  登录失败");
+			LogUtil.MyLog_e("LoginActivity收到消息  登录或者注册失败");
 		}
 	}
 
@@ -115,7 +123,24 @@ public class LoginActivity extends BaseActivity {
 
 	//检查注册输入的信息是否合法
 	private void doCheckRegisterMes() {
-
+		String account = registerAccount.getText().toString().trim();
+		String psw1 = registerPassword1.getText().toString().trim();
+		String psw2 = registerPassword2.getText().toString().trim();
+		if(TextUtil.isEmpty(account,psw1,psw2)){
+			ToastUtil.showShort("账号密码不正确"+"account = " + account +"" +
+					                    "psw1 = " + psw1 + "psw2 = " + psw2 );
+		}else if(!psw1.equals(psw2)){
+			ToastUtil.showShort("两次密码不一致");
+		}else {
+			//如果以上情况都没有，就进行注册
+			user = new User();
+			user.setUsername(account);
+			user.setPassword(psw1);
+			action = new Action(Constants.eventString.EVENT_REGISTER);
+			action.setRequestData(user);
+			loginPresenter.requestAction(action);
+		}
+		//if()添加更多对账号或者密码的限制
 	}
 	//检查登录输入的信息是否合法
 	private void doCheckLoginMes() {

@@ -43,6 +43,7 @@ public class UserTool extends BaseTool{
 			@Override
 			public void onSuccess() {
 				ToastUtil.showShort("登陆成功");
+				action.setEvent(Constants.eventString.EVENT_LOGIN);
 				action.setState(Constants.stateCode.STATE_SUCCESS);//登陆成功
 				bmobInterface.BmobCallBack(action);
 			}
@@ -50,6 +51,28 @@ public class UserTool extends BaseTool{
 			@Override
 			public void onFailure(int i, String s) {
 				ToastUtil.showShort("登录失败！\n" + s);
+				action.setState(Constants.stateCode.STATE_ERROR);//登录失败
+				bmobInterface.BmobCallBack(action);
+			}
+		});
+	}
+	public void doRegister(final Action action){
+		User user = (User) action.getRequestData();
+		bmobUser.setUsername(user.getUsername());
+		bmobUser.setPassword(user.getPassword());
+		bmobUser.signUp(context, new SaveListener() {
+			@Override
+			public void onSuccess() {
+				ToastUtil.showShort("注册成功");
+				action.setEvent(Constants.eventString.EVENT_REGISTER);
+				action.setState(Constants.stateCode.STATE_SUCCESS);//注册成功
+				bmobInterface.BmobCallBack(action);
+			}
+
+			@Override
+			public void onFailure(int i, String s) {
+				ToastUtil.showShort("注册失败");
+				action.setState(Constants.stateCode.STATE_ERROR);//注册失败
 				bmobInterface.BmobCallBack(action);
 			}
 		});
