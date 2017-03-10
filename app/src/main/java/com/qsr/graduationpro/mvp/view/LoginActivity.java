@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.a.a.V;
+import com.qsr.graduationpro.MainActivity;
 import com.qsr.graduationpro.R;
 import com.qsr.graduationpro.app.Constants;
 import com.qsr.graduationpro.base.BaseActivity;
@@ -73,6 +74,8 @@ public class LoginActivity extends BaseActivity {
 		if(Constants.stateCode.STATE_SUCCESS == action.getState()){
 			//如果返回成功
 			LogUtil.MyLog_e("登录界面收到登录成功消息");
+			//跳转到主界面
+			ActivityManager.getInstance().startAct(LoginActivity.this, new MainActivity());
 		}else {
 			LogUtil.MyLog_e("界面收到消息  登录失败");
 		}
@@ -84,17 +87,32 @@ public class LoginActivity extends BaseActivity {
 			case R.id.login_btn://点击登录按钮
 				doCheckLoginMes();
 				break;
-			case R.id.register_btn://点击注册按钮
-				loginLinea.setVisibility(View.GONE);
-				loginBtn.setVisibility(View.GONE);
-				registerLinea.setVisibility(View.VISIBLE);
-				registerBtnGroup.setVisibility(View.VISIBLE);
+			case R.id.register_btn:
+			case R.id.register_login:
+				changeView();
 				break;
 			case R.id.confirm_btn://确认注册信息按钮
 				doCheckRegisterMes();
 				break;
 		}
 	}
+	//登录注册之间切换
+	private void changeView() {
+		if(loginLinea.getVisibility() == View.VISIBLE){
+			loginLinea.setVisibility(View.GONE);
+			loginBtn.setVisibility(View.GONE);
+			registerBtn.setVisibility(View.GONE);
+			registerLinea.setVisibility(View.VISIBLE);
+			registerBtnGroup.setVisibility(View.VISIBLE);
+		}else {
+			loginLinea.setVisibility(View.VISIBLE);
+			loginBtn.setVisibility(View.VISIBLE);
+			registerBtn.setVisibility(View.VISIBLE);
+			registerLinea.setVisibility(View.GONE);
+			registerBtnGroup.setVisibility(View.GONE);
+		}
+	}
+
 	//检查注册输入的信息是否合法
 	private void doCheckRegisterMes() {
 

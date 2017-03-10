@@ -134,7 +134,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/register_btnGroup"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -142,10 +142,19 @@
         <Button
             android:id="@+id/confirm_btn"
             android:layout_weight="5"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:onClick="MyOnClick"
             android:text="开始注册"/>
+        <TextView
+            android:id="@+id/register_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="right"
+            android:clickable="true"
+            android:onClick="MyOnClick"
+            android:text="已有账号？点击登录"/>
     </LinearLayout>
 </LinearLayout>
