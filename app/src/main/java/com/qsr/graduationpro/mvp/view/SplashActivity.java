@@ -76,8 +76,10 @@ public class SplashActivity extends BaseActivity {
 		splashPresenter = new SplashPresenter();
 		//注册
 		splashPresenter.registerPresenterListener(this);
+		//初始化访问事件
+		action = new Action(Constants.eventString.EVENT_VERSION);
 		//执行访问
-		splashPresenter.requestAction(Constants.eventString.EVENT_VERSION);
+		splashPresenter.requestAction(action);
 	}
 
 	//接受返回数据刷新界面

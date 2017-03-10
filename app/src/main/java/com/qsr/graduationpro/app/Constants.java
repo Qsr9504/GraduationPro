@@ -17,6 +17,7 @@ public class Constants {
 	}
 	public interface eventString{//请求指令
 		final String EVENT_VERSION = "event_checkVersion";//版本信息检测指令
+		final String EVENT_LOGIN = "event_login";//用户登录指令
 	}
 	public interface mesWhat{//handle消息处理的what信息
 	}

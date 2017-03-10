@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
  **************************************/
 public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener,IPresenter{
 	protected Message message;
+	protected Action action;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//透到状态栏

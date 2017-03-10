@@ -11,13 +11,40 @@ import java.util.List;
 public class Action<T> {
 	private String event;//请求事件
 
-	private List<T>  resultDataList;//返回结果集合
+	private List<T> resultDataList;//返回结果集合
 
 	private T resultData;//返回结果对象
 
 	private String describe;//描述
 
 	private int state;//状态
+
+	private T requestData;//访问 所需对象
+
+	private List<T> requestDataList;//访问 所需对象集合
+
+	public T getRequestData() {
+		return requestData;
+	}
+
+	public void setRequestData(T requestData) {
+		this.requestData = requestData;
+	}
+
+	public List<T> getRequestDataList() {
+		return requestDataList;
+	}
+
+	public void setRequestDataList(List<T> requestDataList) {
+		this.requestDataList = requestDataList;
+	}
+
+	public Action() {
+	}
+
+	public Action(String event) {
+		this.event = event;
+	}
 
 	public String getEvent() {
 		return event;
