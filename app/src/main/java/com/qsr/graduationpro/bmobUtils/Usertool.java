@@ -72,7 +72,7 @@ public class UserTool extends BaseTool{
 
 			@Override
 			public void onFailure(int i, String s) {
-				ToastUtil.showShort("注册失败");
+				ToastUtil.showShort("注册失败"+s);
 				action.setState(Constants.stateCode.STATE_ERROR);//注册失败
 				bmobInterface.BmobCallBack(action);
 			}

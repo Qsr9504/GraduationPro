@@ -9,7 +9,6 @@ import cn.bmob.v3.BmobObject;
  * Description : app版本信息
  **************************************/
 public class Version extends BmobObject{
-	private String objectId;
 	private String versionName;
 	private Integer versionCode;
 	private String versionDesc;
@@ -19,22 +18,11 @@ public class Version extends BmobObject{
 		super();
 	}
 
-	public Version(String objectId, String versionName, Integer versionCode, String versionDesc, String versionUrl) {
-		this.objectId = objectId;
+	public Version(String versionName, Integer versionCode, String versionDesc, String versionUrl) {
 		this.versionName = versionName;
 		this.versionCode = versionCode;
 		this.versionDesc = versionDesc;
 		this.versionUrl = versionUrl;
-	}
-
-	@Override
-	public String getObjectId() {
-		return objectId;
-	}
-
-	@Override
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
 	}
 
 	public String getVersionName() {
@@ -72,8 +60,7 @@ public class Version extends BmobObject{
 	@Override
 	public String toString() {
 		return "Version{" +
-				"objectId='" + objectId + '\'' +
-				", versionName='" + versionName + '\'' +
+				"versionName='" + versionName + '\'' +
 				", versionCode=" + versionCode +
 				", versionDesc='" + versionDesc + '\'' +
 				", versionUrl='" + versionUrl + '\'' +

@@ -9,7 +9,6 @@ import cn.bmob.v3.BmobObject;
  * Description : 用户结点
  **************************************/
 public class UserNode extends BmobObject{
-	private String	objectId;//id
 	private User ggorjj;//兄长或姐姐
 	private User mmordd;//弟弟或妹妹
 	private User father;//父亲
@@ -21,10 +20,9 @@ public class UserNode extends BmobObject{
 
 	public UserNode() {}
 
-	public UserNode(String objectId, User ggorjj, User mmordd,
+	public UserNode(User ggorjj, User mmordd,
 	                User father, User eldestSon, User mySelf,
 	                User half, Boolean isMarried, Boolean isAlive) {
-		this.objectId = objectId;
 		this.ggorjj = ggorjj;
 		this.mmordd = mmordd;
 		this.father = father;
@@ -43,16 +41,6 @@ public class UserNode extends BmobObject{
 		this.half = null;
 		this.isMarried = false;//默认未婚
 		this.isAlive = true;//默认健在
-	}
-
-	@Override
-	public String getObjectId() {
-		return objectId;
-	}
-
-	@Override
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
 	}
 
 	public User getGgorjj() {
@@ -122,8 +110,7 @@ public class UserNode extends BmobObject{
 	@Override
 	public String toString() {
 		return "UserNode{" +
-				"objectId='" + objectId + '\'' +
-				", ggorjj=" + ggorjj +
+				"ggorjj=" + ggorjj +
 				", mmordd=" + mmordd +
 				", father=" + father +
 				", eldestSon=" + eldestSon +

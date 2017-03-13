@@ -17,6 +17,7 @@ import com.qsr.graduationpro.mvp.model.data.User;
 import com.qsr.graduationpro.mvp.presenter.LoginPresenter;
 import com.qsr.graduationpro.utils.ActivityManager;
 import com.qsr.graduationpro.utils.LogUtil;
+import com.qsr.graduationpro.utils.LoginUtil;
 import com.qsr.graduationpro.utils.TextUtil;
 import com.qsr.graduationpro.utils.ToastUtil;
 
@@ -126,38 +127,23 @@ public class LoginActivity extends BaseActivity {
 		String account = registerAccount.getText().toString().trim();
 		String psw1 = registerPassword1.getText().toString().trim();
 		String psw2 = registerPassword2.getText().toString().trim();
-		if(TextUtil.isEmpty(account,psw1,psw2)){
-			ToastUtil.showShort("账号密码不正确"+"account = " + account +"" +
-					                    "psw1 = " + psw1 + "psw2 = " + psw2 );
-		}else if(!psw1.equals(psw2)){
-			ToastUtil.showShort("两次密码不一致");
-		}else {
+		if(LoginUtil.doCheckRegisterMes(account,psw1,psw2)){
+			//注册信息验证通过
 			//如果以上情况都没有，就进行注册
-			user = new User();
-			user.setUsername(account);
-			user.setPassword(psw1);
 			action = new Action(Constants.eventString.EVENT_REGISTER);
-			action.setRequestData(user);
+			action.setRequestData(new User(account,psw1));
 			loginPresenter.requestAction(action);
 		}
-		//if()添加更多对账号或者密码的限制
 	}
 	//检查登录输入的信息是否合法
 	private void doCheckLoginMes() {
 		String account = loginAccount.getText().toString().trim();
 		String password = loginPassword.getText().toString().trim();
-		//检查是否为空字符串
-		if(!TextUtil.isEmpty(account,password)){
-			//生成事件
-			user = new User();
-			user.setUsername(account);
-			user.setPassword(password);
+		if(LoginUtil.doCheckLoginMes(account,password)){//登录检测通过
 			action = new Action(Constants.eventString.EVENT_LOGIN);
-			action.setRequestData(user);
+			action.setRequestData(new User(account,password));
 			//执行登录操作
 			loginPresenter.requestAction(action);
-		}else {
-			ToastUtil.showShort("账户名或密码不能为空");
 		}
 	}
 

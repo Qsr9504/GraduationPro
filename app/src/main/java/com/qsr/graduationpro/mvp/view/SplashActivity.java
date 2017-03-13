@@ -8,11 +8,14 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.qsr.graduationpro.MainActivity;
 import com.qsr.graduationpro.R;
+import com.qsr.graduationpro.app.App;
 import com.qsr.graduationpro.app.Constants;
 import com.qsr.graduationpro.base.BaseActivity;
 import com.qsr.graduationpro.bmobUtils.VersionTool;
 import com.qsr.graduationpro.mvp.model.data.Action;
+import com.qsr.graduationpro.mvp.model.data.User;
 import com.qsr.graduationpro.mvp.model.data.Version;
 import com.qsr.graduationpro.mvp.presenter.SplashPresenter;
 import com.qsr.graduationpro.utils.ActivityManager;
@@ -27,6 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobUser;
 
 /**************************************
  * FileName : com.qsr.graduationpro.activities
@@ -114,16 +118,25 @@ public class SplashActivity extends BaseActivity {
 	/**
 	 * 跳转至登陆注册界面 或引导页
 	 * 1.判断执行是否是第一次进入app
+	 * 2.判断是否当前已经有用户登录
 	 */
 	private void enter() {
+		BmobUser bmobUser = BmobUser.getCurrentUser(App.mContext);
 		if(hasEnter){
 			isFrist = (boolean) SPUtil.get(Constants.mySP.IS_FRIST, true);
-			if (isFrist) {
-				//进入引导页
-				ActivityManager.getInstance().startAct(this, new GuideActivity());
-			} else {
-				//跳转进入登录注册
-				ActivityManager.getInstance().startAct(this, new LoginActivity());
+			if(bmobUser != null){
+				// 允许用户使用应用
+				ActivityManager.getInstance().startAct(this, new MainActivity());
+			}else{
+				LogUtil.MyLog_e("缓存对象为空");
+				//缓存用户对象为空时， 可打开用户注册界面…
+				if (isFrist) {
+					//进入引导页
+					ActivityManager.getInstance().startAct(this, new GuideActivity());
+				} else {
+					//跳转进入登录注册
+					ActivityManager.getInstance().startAct(this, new LoginActivity());
+				}
 			}
 			hasEnter = false;//防止重复启动新界面，出现bug
 		}

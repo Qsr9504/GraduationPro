@@ -21,4 +21,6 @@ public class TextUtil {
         }
         return false;
     }
+    //判断登录输入是否合法
+//    public static boolean
 }

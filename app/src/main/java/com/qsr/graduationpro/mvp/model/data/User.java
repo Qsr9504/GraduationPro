@@ -9,9 +9,9 @@ import cn.bmob.v3.BmobUser;
  * Description : 用户类
  **************************************/
 public class User extends BmobUser{
-	private String objectId;//用户id
 	private String username;//用户名
 	private String password;//密码
+	private String realName;//真实姓名
 	private Integer sex;//性别 0为女，1为男
 	private String avatar;//头像
 	private String birthday;//生日
@@ -34,16 +34,6 @@ public class User extends BmobUser{
 	}
 
 	@Override
-	public String getObjectId() {
-		return objectId;
-	}
-
-	@Override
-	public void setObjectId(String objectId) {
-		this.objectId = objectId;
-	}
-
-	@Override
 	public String getUsername() {
 		return username;
 	}
@@ -60,6 +50,14 @@ public class User extends BmobUser{
 	@Override
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 	public Integer getSex() {
@@ -163,9 +161,9 @@ public class User extends BmobUser{
 	@Override
 	public String toString() {
 		return "User{" +
-				"objectId='" + objectId + '\'' +
-				", username='" + username + '\'' +
+				"username='" + username + '\'' +
 				", password='" + password + '\'' +
+				", realName='" + realName + '\'' +
 				", sex=" + sex +
 				", avatar='" + avatar + '\'' +
 				", birthday='" + birthday + '\'' +
