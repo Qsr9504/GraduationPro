@@ -60,6 +60,7 @@ public class UserTool extends BaseTool{
 		User user = (User) action.getRequestData();
 		bmobUser.setUsername(user.getUsername());
 		bmobUser.setPassword(user.getPassword());
+		LogUtil.MyLog_e("bmob工具类注册这里收到:"+ user.getUsername() + " - " +user.getPassword());
 		bmobUser.signUp(context, new SaveListener() {
 			@Override
 			public void onSuccess() {

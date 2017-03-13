@@ -1,6 +1,5 @@
 package com.qsr.graduationpro.mvp.model.data;
 
-import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobUser;
 
 /**************************************
@@ -10,39 +9,38 @@ import cn.bmob.v3.BmobUser;
  * Description : 用户类
  **************************************/
 public class User extends BmobUser{
+	private String objectId;//用户id
 	private String username;//用户名
 	private String password;//密码
+	private Integer sex;//性别 0为女，1为男
+	private String avatar;//头像
 	private String birthday;//生日
-	private String userId;//用户id
-	private int coin;//账户金币
-	private int sex;//性别 0为女，1为男
-	private int isManage;//是否是管理者 0为不是，其他为是
-	private String belong;//所属的家族名称
-	public User() {	}
+	private String phone;//手机号码
+	private String email;//邮箱地址
+	private String	qq;//QQ帐号
+	private String	wechat;//微信账号
+	private Integer coin;//账户金币
+	private Clan clanPk1;//所属家族1（外键）
+	private Clan clanPk2;//所属家族2（外键）
+	private User half;//另一半（外键）
+	private Integer isFame;//入选名人堂（0为没有，1为入选）
 
-	public User(String username, String password, String birthday, String userId, int coin, int sex, int isManage, String belong) {
+	public User() {
+	}
+
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.birthday = birthday;
-		this.userId = userId;
-		this.coin = coin;
-		this.sex = sex;
-		this.isManage = isManage;
-		this.belong = belong;
 	}
 
 	@Override
-	public String toString() {
-		return "User{" +
-				"username='" + username + '\'' +
-				", password='" + password + '\'' +
-				", birthday='" + birthday + '\'' +
-				", userId='" + userId + '\'' +
-				", coin=" + coin +
-				", sex=" + sex +
-				", isManage=" + isManage +
-				", belong='" + belong + '\'' +
-				'}';
+	public String getObjectId() {
+		return objectId;
+	}
+
+	@Override
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 
 	@Override
@@ -64,6 +62,22 @@ public class User extends BmobUser{
 		this.password = password;
 	}
 
+	public Integer getSex() {
+		return sex;
+	}
+
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
 	public String getBirthday() {
 		return birthday;
 	}
@@ -72,43 +86,98 @@ public class User extends BmobUser{
 		this.birthday = birthday;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public int getCoin() {
+	@Override
+	public String getEmail() {
+		return email;
+	}
+
+	@Override
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public Integer getCoin() {
 		return coin;
 	}
 
-	public void setCoin(int coin) {
+	public void setCoin(Integer coin) {
 		this.coin = coin;
 	}
 
-	public int getSex() {
-		return sex;
+	public Clan getClanPk1() {
+		return clanPk1;
 	}
 
-	public void setSex(int sex) {
-		this.sex = sex;
+	public void setClanPk1(Clan clanPk1) {
+		this.clanPk1 = clanPk1;
 	}
 
-	public int getIsManage() {
-		return isManage;
+	public Clan getClanPk2() {
+		return clanPk2;
 	}
 
-	public void setIsManage(int isManage) {
-		this.isManage = isManage;
+	public void setClanPk2(Clan clanPk2) {
+		this.clanPk2 = clanPk2;
 	}
 
-	public String getBelong() {
-		return belong;
+	public User getHalf() {
+		return half;
 	}
 
-	public void setBelong(String belong) {
-		this.belong = belong;
+	public void setHalf(User half) {
+		this.half = half;
+	}
+
+	public Integer getIsFame() {
+		return isFame;
+	}
+
+	public void setIsFame(Integer isFame) {
+		this.isFame = isFame;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"objectId='" + objectId + '\'' +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", sex=" + sex +
+				", avatar='" + avatar + '\'' +
+				", birthday='" + birthday + '\'' +
+				", phone='" + phone + '\'' +
+				", email='" + email + '\'' +
+				", qq='" + qq + '\'' +
+				", wechat='" + wechat + '\'' +
+				", coin=" + coin +
+				", clanPk1=" + clanPk1 +
+				", clanPk2=" + clanPk2 +
+				", half=" + half +
+				", isFame=" + isFame +
+				'}';
 	}
 }

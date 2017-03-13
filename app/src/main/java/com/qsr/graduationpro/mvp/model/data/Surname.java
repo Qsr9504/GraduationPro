@@ -5,9 +5,9 @@ import cn.bmob.v3.BmobObject;
 /**************************************
  * FileName : com.qsr.graduationpro.mvp.model.data
  * Author : qsr
- * Time : 2017/3/5 15:12
- * Description : 家族光荣史
+ * Time : 2017/3/13 19:28
+ * Description : 姓氏大全
  **************************************/
-public class FamilyHistory extends BmobObject{
-
+public class Surname extends BmobObject{
+	private String name;//姓氏大全
 }
