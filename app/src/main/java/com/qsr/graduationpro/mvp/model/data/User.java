@@ -9,14 +9,10 @@ import cn.bmob.v3.BmobUser;
  * Description : 用户类
  **************************************/
 public class User extends BmobUser{
-	private String username;//用户名
-	private String password;//密码
 	private String realName;//真实姓名
 	private Integer sex;//性别 0为女，1为男
 	private String avatar;//头像
-	private String birthday;//生日
 	private String phone;//手机号码
-	private String email;//邮箱地址
 	private String	qq;//QQ帐号
 	private String	wechat;//微信账号
 	private Integer coin;//账户金币
@@ -26,30 +22,6 @@ public class User extends BmobUser{
 	private Integer isFame;//入选名人堂（0为没有，1为入选）
 
 	public User() {
-	}
-
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-
-	@Override
-	public String getUsername() {
-		return username;
-	}
-
-	@Override
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	@Override
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getRealName() {
@@ -76,13 +48,6 @@ public class User extends BmobUser{
 		this.avatar = avatar;
 	}
 
-	public String getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
 
 	public String getPhone() {
 		return phone;
@@ -90,16 +55,6 @@ public class User extends BmobUser{
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	@Override
-	public String getEmail() {
-		return email;
-	}
-
-	@Override
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getQq() {
@@ -161,14 +116,10 @@ public class User extends BmobUser{
 	@Override
 	public String toString() {
 		return "User{" +
-				"username='" + username + '\'' +
-				", password='" + password + '\'' +
-				", realName='" + realName + '\'' +
+				"realName='" + realName + '\'' +
 				", sex=" + sex +
 				", avatar='" + avatar + '\'' +
-				", birthday='" + birthday + '\'' +
 				", phone='" + phone + '\'' +
-				", email='" + email + '\'' +
 				", qq='" + qq + '\'' +
 				", wechat='" + wechat + '\'' +
 				", coin=" + coin +

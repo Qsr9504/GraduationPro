@@ -21,6 +21,8 @@ import com.qsr.graduationpro.utils.LoginUtil;
 import com.qsr.graduationpro.utils.TextUtil;
 import com.qsr.graduationpro.utils.ToastUtil;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -62,7 +64,7 @@ public class LoginActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void init() {
+	protected void AfterInitView() {
 		ActivityManager.getInstance().addActivity(this);
 		//申请一个登录注册控制器
 		loginPresenter = new LoginPresenter();
@@ -131,7 +133,10 @@ public class LoginActivity extends BaseActivity {
 			//注册信息验证通过
 			//如果以上情况都没有，就进行注册
 			action = new Action(Constants.eventString.EVENT_REGISTER);
-			action.setRequestData(new User(account,psw1));
+			ArrayList<String> list = new ArrayList<String>();
+			list.add(account);
+			list.add(psw1);
+			action.setRequestData(list);
 			loginPresenter.requestAction(action);
 		}
 	}
@@ -141,7 +146,10 @@ public class LoginActivity extends BaseActivity {
 		String password = loginPassword.getText().toString().trim();
 		if(LoginUtil.doCheckLoginMes(account,password)){//登录检测通过
 			action = new Action(Constants.eventString.EVENT_LOGIN);
-			action.setRequestData(new User(account,password));
+			ArrayList<String> list = new ArrayList<String>();
+			list.add(account);
+			list.add(password);
+			action.setRequestData(list);
 			//执行登录操作
 			loginPresenter.requestAction(action);
 		}

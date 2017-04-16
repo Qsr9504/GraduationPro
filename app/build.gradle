@@ -23,6 +23,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
+    //cardview
+    compile 'com.android.support:cardview-v7:23.4.0'
     //数据传输使用的eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
     //注入式框架butterknife
@@ -33,4 +35,5 @@ dependencies {
     compile 'cn.bmob.android:bmob-sdk:3.4.6'
     compile 'com.squareup.okhttp:okhttp:2.4.0'//CDN文件服务使用okhttp相关包进行文件的上传和下载（必填）
     compile 'com.squareup.okio:okio:1.4.0'
+
 }

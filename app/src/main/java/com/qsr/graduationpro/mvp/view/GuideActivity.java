@@ -41,7 +41,7 @@ public class GuideActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void init() {
+	protected void AfterInitView() {
 		ActivityManager.getInstance().addActivity(this);
 		//将进入过一次引导页的进行记录，防止下次再次跳转到引导页
 		SPUtil.put(Constants.mySP.IS_FRIST, false);

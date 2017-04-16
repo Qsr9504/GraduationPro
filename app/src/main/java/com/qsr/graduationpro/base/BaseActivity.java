@@ -9,6 +9,7 @@ import android.view.Window;
 
 import com.qsr.graduationpro.mvp.model.data.Action;
 import com.qsr.graduationpro.mvp.presenter.IPresenter;
+import com.qsr.graduationpro.utils.ActivityManager;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,13 +32,14 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 		requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
 		setContentView(getLayoutId());
 		ButterKnife.bind(this);//注入式框架butterknife
+		ActivityManager.getInstance().addActivity(this);
 		initView(savedInstanceState);
-		init();
+		AfterInitView();
 	}
 
 	protected abstract int getLayoutId();
 
-	protected abstract void init();
+	protected abstract void AfterInitView();
 
 	protected abstract void notify(Action action);
 

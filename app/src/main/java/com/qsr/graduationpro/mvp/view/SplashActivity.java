@@ -13,6 +13,7 @@ import com.qsr.graduationpro.R;
 import com.qsr.graduationpro.app.App;
 import com.qsr.graduationpro.app.Constants;
 import com.qsr.graduationpro.base.BaseActivity;
+import com.qsr.graduationpro.bmobUtils.UserTool;
 import com.qsr.graduationpro.bmobUtils.VersionTool;
 import com.qsr.graduationpro.mvp.model.data.Action;
 import com.qsr.graduationpro.mvp.model.data.User;
@@ -71,7 +72,7 @@ public class SplashActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void init() {
+	protected void AfterInitView() {
 		ActivityManager.getInstance().addActivity(this);
 		//检测版本信息
 		LogUtil.MyLog_e("准备版本检测");
@@ -127,6 +128,8 @@ public class SplashActivity extends BaseActivity {
 			if(bmobUser != null){
 				// 允许用户使用应用
 				ActivityManager.getInstance().startAct(this, new MainActivity());
+				//测试
+				UserTool.getInstance().doUserNode();
 			}else{
 				LogUtil.MyLog_e("缓存对象为空");
 				//缓存用户对象为空时， 可打开用户注册界面…
