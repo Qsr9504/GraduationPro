@@ -128,8 +128,6 @@ public class SplashActivity extends BaseActivity {
 			if(bmobUser != null){
 				// 允许用户使用应用
 				ActivityManager.getInstance().startAct(this, new MainActivity());
-				//测试
-				UserTool.getInstance().doUserNode();
 			}else{
 				LogUtil.MyLog_e("缓存对象为空");
 				//缓存用户对象为空时， 可打开用户注册界面…

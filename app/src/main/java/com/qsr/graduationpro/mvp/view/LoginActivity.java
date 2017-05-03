@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.bmob.v3.BmobUser;
 
 public class LoginActivity extends BaseActivity {
 
@@ -70,6 +71,8 @@ public class LoginActivity extends BaseActivity {
 		loginPresenter = new LoginPresenter();
 		//注册
 		loginPresenter.registerPresenterListener(this);
+		//防止未知缓存
+		BmobUser.logOut(this);   //清除缓存用户对象
 	}
 
 	@Override

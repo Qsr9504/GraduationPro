@@ -19,6 +19,7 @@ public class Constants {
 		final String EVENT_VERSION = "event_checkVersion";//版本信息检测指令
 		final String EVENT_LOGIN = "event_login";//用户登录指令
 		final String EVENT_REGISTER = "event_register";//用户注册指令
+		final String EVENT_USERNODE = "event_user_node_nfo";//用户结点信息
 	}
 	public interface mesWhat{//handle消息处理的what信息
 	}

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.qsr.graduationpro.mvp.model.data.Action;
+import com.qsr.graduationpro.mvp.model.data.User;
 import com.qsr.graduationpro.mvp.presenter.IPresenter;
 import com.qsr.graduationpro.utils.ActivityManager;
 
@@ -23,7 +24,8 @@ import butterknife.ButterKnife;
  **************************************/
 public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener,IPresenter{
 	protected Message message;
-	protected Action action;
+	protected Action action = new Action();
+	protected User user = new User();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//透到状态栏

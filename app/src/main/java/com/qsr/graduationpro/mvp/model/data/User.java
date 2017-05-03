@@ -21,6 +21,16 @@ public class User extends BmobUser{
 	private User half;//另一半（外键）
 	private Integer isFame;//入选名人堂（0为没有，1为入选）
 
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	private String birthday;//生日
+
 	public User() {
 	}
 
@@ -47,7 +57,6 @@ public class User extends BmobUser{
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-
 
 	public String getPhone() {
 		return phone;

@@ -10,9 +10,14 @@ import com.qsr.graduationpro.mvp.model.data.UserNode;
 import com.qsr.graduationpro.utils.LogUtil;
 import com.qsr.graduationpro.utils.ToastUtil;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**************************************
@@ -69,9 +74,7 @@ public class UserTool extends BaseTool{
 			@Override
 			public void onSuccess() {
 				ToastUtil.showShort("注册成功");
-				action.setEvent(Constants.eventString.EVENT_REGISTER);
-				action.setState(Constants.stateCode.STATE_SUCCESS);//注册成功
-				bmobInterface.BmobCallBack(action);
+				doUserNode();
 			}
 
 			@Override
@@ -82,13 +85,18 @@ public class UserTool extends BaseTool{
 			}
 		});
 	}
+
 	public void doUserNode(){
 		User user = BmobUser.getCurrentUser(context,User.class);
-		UserNode userNode = new UserNode(user,false,true);
+		final UserNode userNode = new UserNode(user, false, true);
 		userNode.save(context, new SaveListener() {
 			@Override
 			public void onSuccess() {
 				ToastUtil.showShort("添加当前用户结点成功");
+				action.setEvent(Constants.eventString.EVENT_REGISTER);
+				action.setState(Constants.stateCode.STATE_SUCCESS);//注册成功
+				action.setResultData(userNode);
+				bmobInterface.BmobCallBack(action);
 			}
 
 			@Override
@@ -97,4 +105,29 @@ public class UserTool extends BaseTool{
 			}
 		});
 	}
+	public void getUserNode(User user){
+		final Action ac = new Action();
+		BmobQuery<UserNode> query = new BmobQuery<UserNode>();
+		LogUtil.MyLog_e("***"+user.toString()+"***");
+		query.addWhereEqualTo("mySelf",user);
+		query.include("mySelf");// 希望在查询结点信息的同时也把结点主人的信息查询出来
+		query.findObjects(context,new FindListener<UserNode>(){
+			@Override
+			public void onSuccess(List<UserNode> list) {
+				LogUtil.MyLog_e("查询到"+list.size()+"===="+list.toString());
+				ac.setEvent(Constants.eventString.EVENT_USERNODE);
+				ac.setState(Constants.stateCode.STATE_SUCCESS);
+				ac.setResultData(list.get(0));
+				bmobInterface.BmobCallBack(ac);
+			}
+
+			@Override
+			public void onError(int i, String s) {
+				ac.setEvent(Constants.eventString.EVENT_USERNODE);
+				ac.setState(Constants.stateCode.STATE_ERROR);
+				bmobInterface.BmobCallBack(ac);
+			}
+		});
+	}
+
 }
