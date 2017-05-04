@@ -1,5 +1,7 @@
 package com.qsr.graduationpro.mvp.model.data;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobUser;
 
 /**************************************
@@ -8,7 +10,7 @@ import cn.bmob.v3.BmobUser;
  * Time : 2017/2/24 14:45
  * Description : 用户类
  **************************************/
-public class User extends BmobUser{
+public class User extends BmobUser implements Serializable{
 	private String realName;//真实姓名
 	private Integer sex;//性别 0为女，1为男
 	private String avatar;//头像

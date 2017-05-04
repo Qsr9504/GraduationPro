@@ -2,17 +2,15 @@ package com.qsr.graduationpro.base;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 
+import com.google.gson.Gson;
 import com.qsr.graduationpro.mvp.model.data.Action;
 import com.qsr.graduationpro.mvp.model.data.User;
 import com.qsr.graduationpro.mvp.presenter.IPresenter;
 import com.qsr.graduationpro.utils.ActivityManager;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 
@@ -26,6 +24,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 	protected Message message;
 	protected Action action = new Action();
 	protected User user = new User();
+	protected Gson gson = new Gson();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//透到状态栏

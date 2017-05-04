@@ -10,4 +10,10 @@
     <string name="footer_news_text">新闻</string>
     <string name="footer_personal_pic">&#xe67e;</string>
     <string name="footer_personal_text">个人</string>
+
+    <!--  动画 加载 -->
+    <string name="BallPulseIndicator">BallPulseIndicator</string>
+    <string name="BallGridPulseIndicator">BallGridPulseIndicator</string>
+    <string name="BallClipRotateIndicator">BallClipRotateIndicator</string>
+    <string name="BallClipRotatePulseIndicator">BallClipRotatePulseIndicator</string>
 </resources>

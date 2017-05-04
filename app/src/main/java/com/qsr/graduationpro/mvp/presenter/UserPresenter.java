@@ -15,14 +15,15 @@ public class UserPresenter extends BasePresenter{
 	private UserBiz userBiz;
 	@Override
 	public void init() {
-		userBiz = new UserBiz();
+		if(userBiz == null)
+			userBiz = new UserBiz();
 		userBiz.registerBizListener(this);
 	}
 
 	@Override
 	public void requestAction(Action action) {
 		userBiz.setAction(action);
-		if(Constants.eventString.EVENT_USERNODE.equals(action.getEvent())){
+		if(Constants.eventString.EVENT_USERNODE_BY_USER.equals(action.getEvent())){
 			//查询用户结点
 			userBiz.getUserNodeInfo();
 		}

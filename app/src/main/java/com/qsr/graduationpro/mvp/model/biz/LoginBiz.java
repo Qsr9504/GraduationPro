@@ -14,9 +14,10 @@ import com.qsr.graduationpro.utils.LogUtil;
  * Description : 登录注册使用
  **************************************/
 public class LoginBiz extends BaseBiz{
+	private Action action;
 	@Override
 	public void setAction(Action action) {
-		super.action = action;
+		this.action = action;
 	}
 	public void doLogin(){
 		//转交给bmob后端云

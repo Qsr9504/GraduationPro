@@ -2,6 +2,7 @@ package com.qsr.graduationpro.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import java.util.Stack;
 
@@ -82,5 +83,15 @@ public class ActivityManager {
 	public void startAct(Activity fromAct,Activity toAct){
 		fromAct.startActivity(new Intent(fromAct,toAct.getClass()));
 		removeCurrent();
+	}
+	public void startAct(Activity fromAct,Activity toAct,boolean isClose){
+		fromAct.startActivity(new Intent(fromAct,toAct.getClass()));
+		if(isClose)
+			removeCurrent();
+	}
+	public void startAct(Activity fromAct,Activity toAct,Bundle bundle){
+		Intent intent = new Intent(fromAct,toAct.getClass());
+		intent.putExtra("from",bundle);
+		fromAct.startActivity(intent);
 	}
 }

@@ -21,6 +21,6 @@ public class UserBiz extends BaseBiz{
 		//注册当前的监听接口，让父类方法进行回调
 		UserTool.getInstance().registerBmobInterface(UserBiz.this);
 
-		UserTool.getInstance().getUserNode((User) action.getRequestData());
+//		UserTool.getInstance().getUserNode((User) action.getRequestData());
 	}
 }

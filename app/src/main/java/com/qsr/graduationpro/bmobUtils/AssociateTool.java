@@ -8,6 +8,8 @@ import com.qsr.graduationpro.mvp.model.data.User;
 import com.qsr.graduationpro.mvp.model.data.UserNode;
 import com.qsr.graduationpro.utils.LogUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +41,7 @@ public class AssociateTool extends BaseTool {
         this.context = context;
         bmobUser = new BmobUser();
     }
-    public void addAsso(final User user, final String account, final int type){
+    public void addAsso(final String username, final String account, final int type){
         //查询用户是否存在
         BmobQuery<User> query = new BmobQuery<User>();
         query.addWhereEqualTo("username", account);
@@ -50,11 +52,16 @@ public class AssociateTool extends BaseTool {
                     //查询失败，该用户不存在
                     action.setEvent(Constants.eventString.EVENT_ASSOCIATE);
                     action.setState(Constants.stateCode.STATE_NOT_FOUND);//未找到该人
-                    bmobInterface.BmobCallBack(action);
+                    action.setResultData("该用户不存在");
+                    EventBus.getDefault().post(action);
                 }else {
                     LogUtil.MyLog_e("用户查询存在,接下来准备进行添加关系操作!"+list.get(0).toString());
                     //查询存在，接下来进行添加关系操作
-                    addAsso(user, list.get(0),type);
+                    addAsso2(username, list.get(0).getUsername(),type);
+                    action.setEvent(Constants.eventString.EVENT_ASSOCIATE);
+                    action.setState(Constants.stateCode.STATE_PROGRESS);
+                    action.setResultData("用户存在");
+                    EventBus.getDefault().post(action);
                 }
             }
 
@@ -64,32 +71,37 @@ public class AssociateTool extends BaseTool {
             }
         });
     }
-    private void addAsso(final User user1, final User user2, final int type){
-        LogUtil.MyLog_e(user1.toString()+"--"+user2.toString()+"---"+type);
+    private void addAsso2(final String user1, final String user2, final int type){
+        action.setEvent(Constants.eventString.EVENT_ASSOCIATE);
         //添加用户1的关系
         //添加用户2的关系
+        List slist = new ArrayList();
+        slist.add(user1);
+        slist.add(user2);
         BmobQuery<UserNode> query = new BmobQuery<UserNode>();
-        BmobQuery<User> innerQuery = new BmobQuery<User>();
-        List<String> list = new ArrayList<String>();
-        list.add(user1.getUsername());
-        list.add(user2.getUsername());
-        innerQuery.addWhereContainedIn("username",Arrays.asList(list.toArray()));
-        query.include("mySelf");
-        query.addWhereMatchesQuery("mySelf","_User",innerQuery);
+        query.addWhereContainedIn("mySelf",Arrays.asList(slist.toArray()));
         query.findObjects(context, new FindListener<UserNode>() {
             @Override
             public void onSuccess(List<UserNode> list) {
-                LogUtil.MyLog_e("查询到结点个数是:"+list.size()+"分别是"+list.toString());
-                addAsso(user1,user2,list.get(1),list.get(0),type);
+                if(list.size() == 0){
+                    addAsso2(user1,user2,type);
+                }else {
+                    LogUtil.MyLog_e("查询到结点个数是:"+list.size()+"分别是"+list.toString());
+                    addAsso3(user1,user2,list.get(0),list.get(1),type);
+                    //正在进行
+                    action.setState(Constants.stateCode.STATE_PROGRESS);
+                    action.setResultData("查询到两个结点，准备更新结点");
+                    EventBus.getDefault().post(action);
+                }
             }
 
             @Override
             public void onError(int i, String s) {
-                LogUtil.MyLog_e("内部查询发生错误");
+                LogUtil.MyLog_e("查询对应两个结点发生错误");
             }
         });
     }
-    private void addAsso(final User user1, User user2, UserNode userNode1, final UserNode userNode2, int type){
+    private void addAsso3(final String user1, String user2, UserNode userNode1, final UserNode userNode2, int type){
         if(type == Constants.relativeCode.DIDI){
             userNode1.setMmordd(user2);
             userNode2.setGgorjj(user1);
@@ -113,6 +125,9 @@ public class AssociateTool extends BaseTool {
                     @Override
                     public void onSuccess() {
                         LogUtil.MyLog_e("更新完全完全完成！！！");
+                        action.setState(Constants.stateCode.STATE_SUCCESS);
+                        action.setEvent(Constants.eventString.EVENT_ASSOCIATE);
+                        EventBus.getDefault().post(action);
                     }
 
                     @Override

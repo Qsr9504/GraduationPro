@@ -9,85 +9,60 @@ import cn.bmob.v3.BmobObject;
  * Description : 用户结点
  **************************************/
 public class UserNode extends BmobObject{
-	private User ggorjj;//兄长或姐姐
-	private User mmordd;//弟弟或妹妹
-	private User father;//父亲
-	private User eldestSon;//长子或长女
-	private User mySelf;//用户详细
-	private User half;//另一半的详细
+	private String ggorjj;//兄长或姐姐
+	private String mmordd;//弟弟或妹妹
+	private String father;//父亲
+	private String eldestSon;//长子或长女
+	private String mySelf;//用户详细
+	private String half;//另一半的详细
 	private Boolean isMarried;//是否已婚（true是）
 	private Boolean isAlive;//是否健在（true是）
 
-	public UserNode() {}
-
-	public UserNode(User ggorjj, User mmordd,
-	                User father, User eldestSon, User mySelf,
-	                User half, Boolean isMarried, Boolean isAlive) {
-		this.ggorjj = ggorjj;
-		this.mmordd = mmordd;
-		this.father = father;
-		this.eldestSon = eldestSon;
-		this.mySelf = mySelf;
-		this.half = half;
-		this.isMarried = isMarried;
-		this.isAlive = isAlive;
-	}
-	public UserNode(User mySelf, Boolean isMarried, Boolean isAlive) {
-		this.ggorjj = null;
-		this.mmordd = null;
-		this.father = null;
-		this.eldestSon = null;
-		this.mySelf = mySelf;
-		this.half = null;
-		this.isMarried = false;//默认未婚
-		this.isAlive = true;//默认健在
-	}
-
-	public User getGgorjj() {
+	public String getGgorjj() {
 		return ggorjj;
 	}
 
-	public void setGgorjj(User ggorjj) {
+	public void setGgorjj(String ggorjj) {
 		this.ggorjj = ggorjj;
 	}
 
-	public User getMmordd() {
+	public String getMmordd() {
 		return mmordd;
 	}
 
-	public void setMmordd(User mmordd) {
+	public void setMmordd(String mmordd) {
 		this.mmordd = mmordd;
 	}
 
-	public User getFather() {
+	public String getFather() {
 		return father;
 	}
 
-	public void setFather(User father) {
+	public void setFather(String father) {
 		this.father = father;
 	}
 
-	public User getEldestSon() {
+	public String getEldestSon() {
 		return eldestSon;
 	}
 
-	public void setEldestSon(User eldestSon) {
+	public void setEldestSon(String eldestSon) {
 		this.eldestSon = eldestSon;
 	}
 
-	public User getMySelf() {
+	public String getMySelf() {
 		return mySelf;
 	}
 
-	public void setMySelf(User mySelf) {
+	public void setMySelf(String mySelf) {
 		this.mySelf = mySelf;
 	}
 
-	public User getHalf() {
+	public String getHalf() {
 		return half;
 	}
 
-	public void setHalf(User half) {
+	public void setHalf(String half) {
 		this.half = half;
 	}
 
@@ -105,6 +80,14 @@ public class UserNode extends BmobObject{
 
 	public void setAlive(Boolean alive) {
 		isAlive = alive;
+	}
+
+	public UserNode() {}
+
+	public UserNode(String mySelf, Boolean isMarried, Boolean isAlive) {
+		this.mySelf = mySelf;
+		this.isMarried = false;//默认未婚
+		this.isAlive = true;//默认健在
 	}
 
 	@Override
