@@ -1,6 +1,7 @@
 package com.qsr.graduationpro;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -19,7 +20,11 @@ import com.qsr.graduationpro.mvp.model.data.User;
 import com.qsr.graduationpro.mvp.model.data.UserNode;
 import com.qsr.graduationpro.mvp.presenter.UserPresenter;
 import com.qsr.graduationpro.mvp.view.AssociateActivity;
+import com.qsr.graduationpro.mvp.view.CallcalculateActivity;
+import com.qsr.graduationpro.mvp.view.FameActivity;
 import com.qsr.graduationpro.mvp.view.InfoActivity;
+import com.qsr.graduationpro.mvp.view.LoginActivity;
+import com.qsr.graduationpro.mvp.view.QmessActivity;
 import com.qsr.graduationpro.ui.UpdatePwd;
 import com.qsr.graduationpro.ui.circleAvatar.CircleTransform;
 import com.qsr.graduationpro.utils.ActivityManager;
@@ -50,8 +55,6 @@ public class MainActivity extends BaseActivity {
     TextView changePwd;
     @Bind(R.id.addHalf)
     TextView addHalf;
-    @Bind(R.id.myCV)
-    TextView myCV;
     @Bind(R.id.myFamily)
     TextView myFamily;
     @Bind(R.id.myFamous)
@@ -60,6 +63,8 @@ public class MainActivity extends BaseActivity {
     TextView myCalled;
     @Bind(R.id.openCheck)
     TextView openCheck;
+    @Bind(R.id.outLogin)
+    TextView outLogin;
     @Bind(R.id.drawer_ll)
     LinearLayout drawerLl;
     private TextView mainName;
@@ -138,7 +143,11 @@ public class MainActivity extends BaseActivity {
                     .networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.mipmap.icon).transform(new CircleTransform()).into(slidingAvatar);
         Picasso.with(this).load(user.getAvatar())//设置不缓存
                 .networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.mipmap.icon).transform(new CircleTransform()).into(mainAvatar);
-
+        if (gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class).getHalf() == null) {
+            addHalf.setVisibility(View.VISIBLE);
+        } else {
+            addHalf.setVisibility(View.GONE);
+        }
         String aaa;
         if (user.getRealName() == null) {
             mainName.setText("姓名：暂未填写");
@@ -303,5 +312,38 @@ public class MainActivity extends BaseActivity {
     public void changePwd(View view) {
         UpdatePwd updatePwd = new UpdatePwd(MainActivity.this);
         updatePwd.show();
+    }
+
+    //添加配偶
+    public void addHalf(View view) {
+        //跳转到添加关系界面
+        bundle = new Bundle();
+        //将需要操作的用户名传送给新开的activity
+        bundle.putInt("type", Constants.relativeCode.QIZI);
+        //启动添加关系的界面
+        ActivityManager.getInstance().startAct(MainActivity.this, new AssociateActivity(), bundle);
+    }
+    //退出登录
+    public void outLogin(View view) {
+        BmobUser.logOut(this);
+        ActivityManager.getInstance().startAct(MainActivity.this, new LoginActivity());
+    }
+
+    //打开新activity
+    public void openAct(View view){
+        Activity activity = null;
+        switch (view.getId()){
+            case R.id.myFamily://打开家族信息展示
+                activity = new QmessActivity();
+                break;
+            case R.id.myFamous://打开瀑布流
+                activity = new FameActivity();
+                break;
+            case R.id.myCalled://打开称谓计算器
+                activity = new CallcalculateActivity();
+                break;
+        }
+        if(activity!=null)
+            ActivityManager.getInstance().startAct(this,activity,false);
     }
 }

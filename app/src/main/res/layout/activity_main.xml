@@ -54,22 +54,15 @@
                 android:clickable="true"
                 android:onClick="changePwd"
                 android:textSize="25sp"/>
+
             <TextView
                 android:id="@+id/addHalf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
+                android:onClick="addHalf"
                 android:text="添加配偶"
-                android:textSize="25sp"/>
-
-            <TextView
-                android:id="@+id/myCV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginTop="10dp"
-                android:text="我的履历"
                 android:textSize="25sp"/>
 
             <TextView
@@ -78,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
+                android:onClick="openAct"
                 android:text="家族信息"
                 android:textSize="25sp"/>
 
@@ -87,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
+                android:onClick="openAct"
                 android:text="家族名人堂"
                 android:textSize="25sp"/>
 
@@ -96,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
+                android:onClick="openAct"
                 android:text="称谓计算器"
                 android:textSize="25sp"/>
             <TextView
@@ -107,6 +103,14 @@
                 android:clickable="true"
                 android:layout_marginTop="10dp"
                 android:textSize="25sp"/>
+            <TextView
+                android:id="@+id/outLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:onClick="outLogin"
+                android:text="退出登录"
+                />
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

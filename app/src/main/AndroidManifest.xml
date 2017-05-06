@@ -50,7 +50,10 @@
         <activity android:name=".mvp.view.LoginActivity" />
         <activity android:name=".mvp.view.GuideActivity" />
         <activity android:name=".mvp.view.AssociateActivity" />
-        <activity android:name=".mvp.view.InfoActivity"></activity>
+        <activity android:name=".mvp.view.InfoActivity" />
+        <activity android:name=".mvp.view.CallcalculateActivity" />
+        <activity android:name=".mvp.view.FameActivity" />
+        <activity android:name=".mvp.view.QmessActivity"></activity>
     </application>
 
 </manifest>

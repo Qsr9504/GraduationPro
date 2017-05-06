@@ -47,4 +47,6 @@ dependencies {
     String htextview_version = "0.1.1"
     compile "com.hanks:htextview-base:$htextview_version"
     compile "com.hanks:htextview-line:$htextview_version"
+    //流式文本框
+    compile 'com.github.deano2390:FlowTextView:2.0.5'
 }

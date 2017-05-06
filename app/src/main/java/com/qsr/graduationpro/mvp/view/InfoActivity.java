@@ -115,7 +115,7 @@ public class InfoActivity extends Activity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getMes(Action action) {
         if (Constants.enevtBus.BUS_USERINFO.equals(action.getEvent())) {
-            User user = (User) action.getResultData();
+            final User user = (User) action.getResultData();
             LogUtil.MyLog_e("infoA获取到用户信息是："+user.toString());
             //显示头像
             Picasso.with(this).load(user.getAvatar())//设置不缓存
@@ -129,7 +129,19 @@ public class InfoActivity extends Activity {
             infoFameInner.setText(user.getIsFame() == null ? "暂未填写" : (user.getIsFame() == 1 ? "是" : "否"));
             infoQqInner.setText(checkEmpty(user.getQq()));
             infoWechatInner.setText(checkEmpty(user.getWechat()));
-            infoMarriedInner.setText(checkEmpty(user.getHalf()));
+            //从本地验证获取结点 检查另一半是否存在
+            if(gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class).getHalf() == null){
+                infoMarriedInner.setText(checkEmpty(gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class).getHalf()));
+                infoMarried.setClickable(false);//设置为不可点击
+            }else {
+                infoMarriedInner.setText(gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class).getHalf());
+                infoMarried.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UserTool.getInstance().getUserInfo(gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class).getHalf());
+                    }
+                });
+            }
             if (user.getUsername().equals(BmobUser.getCurrentUser(this).getUsername())) {
                 //如果当前是本人的话
                 edit.setVisibility(View.VISIBLE);
