@@ -32,6 +32,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.SaveListener;
 
 /**************************************
  * FileName : com.qsr.graduationpro.activities
@@ -76,15 +77,19 @@ public class SplashActivity extends BaseActivity {
 		ActivityManager.getInstance().addActivity(this);
 		//检测版本信息
 		LogUtil.MyLog_e("准备版本检测");
-		splashImage.setClickable(false);//设置为不可点击
-		//初始化一个控制器
-		splashPresenter = new SplashPresenter();
-		//注册
-		splashPresenter.registerPresenterListener(this);
-		//初始化访问事件
-		action = new Action(Constants.eventString.EVENT_VERSION);
-		//执行访问
-		splashPresenter.requestAction(action);
+		if((Boolean) SPUtil.get(Constants.mySP.OPEN_CHECK,true)){
+			splashImage.setClickable(false);//设置为不可点击
+			//初始化一个控制器
+			splashPresenter = new SplashPresenter();
+			//注册
+			splashPresenter.registerPresenterListener(this);
+			//初始化访问事件
+			action = new Action(Constants.eventString.EVENT_VERSION);
+			//执行访问
+			splashPresenter.requestAction(action);
+		}else {
+			enter();
+		}
 	}
 
 	//接受返回数据刷新界面
@@ -127,7 +132,7 @@ public class SplashActivity extends BaseActivity {
 			isFrist = (boolean) SPUtil.get(Constants.mySP.IS_FRIST, true);
 			if(bmobUser != null){
 				// 允许用户使用应用
-				ActivityManager.getInstance().startAct(this, new MainActivity());
+				ActivityManager.getInstance().startAct(SplashActivity.this, new MainActivity());
 			}else{
 				LogUtil.MyLog_e("缓存对象为空");
 				//缓存用户对象为空时， 可打开用户注册界面…

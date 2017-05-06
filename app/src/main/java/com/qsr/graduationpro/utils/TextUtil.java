@@ -21,6 +21,13 @@ public class TextUtil {
         }
         return false;
     }
+    public static boolean MyIsEmpty(String str){
+        if(str == null)
+            return true;
+        if(str.equals(""))
+            return true;
+        return false;
+    }
     //判断登录输入是否合法
 //    public static boolean
 }

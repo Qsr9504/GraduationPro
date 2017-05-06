@@ -20,7 +20,7 @@ public class User extends BmobUser implements Serializable{
 	private Integer coin;//账户金币
 	private Clan clanPk1;//所属家族1（外键）
 	private Clan clanPk2;//所属家族2（外键）
-	private User half;//另一半（外键）
+	private String half;//另一半（外键）
 	private Integer isFame;//入选名人堂（0为没有，1为入选）
 
 	public String getBirthday() {
@@ -108,11 +108,11 @@ public class User extends BmobUser implements Serializable{
 		this.clanPk2 = clanPk2;
 	}
 
-	public User getHalf() {
+	public String getHalf() {
 		return half;
 	}
 
-	public void setHalf(User half) {
+	public void setHalf(String half) {
 		this.half = half;
 	}
 
@@ -131,6 +131,7 @@ public class User extends BmobUser implements Serializable{
 				", sex=" + sex +
 				", avatar='" + avatar + '\'' +
 				", phone='" + phone + '\'' +
+				", birth='" + birthday + '\'' +
 				", qq='" + qq + '\'' +
 				", wechat='" + wechat + '\'' +
 				", coin=" + coin +

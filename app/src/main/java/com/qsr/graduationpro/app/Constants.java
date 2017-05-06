@@ -11,6 +11,7 @@ public class Constants {
 		final String OPEN_CHECK = "open_check";//是否开启版本检查
 		final String IS_FRIST = "is_frist";//是否开启版本检查
 		final String CURRENT_USERNODE = "current_usernode";//当前用户结点
+		final String CURRENT_USER = "current_user";//当前用户结点
 		final String USERNODE = "usernode";//用户结点
 	}
 	public interface stateCode{//请求状态码  1
@@ -42,5 +43,8 @@ public class Constants {
 		final String BUS_MAIN_USER = "bus_main_user";
 		final String BUS_MAIN_USERNODE = "bus_main_usernode";
 		final String BUS_REFRESH = "bus_main_refresh";
+		final String BUS_USERINFO = "bus_userinfo";
+		final String BUS_SEND_AVATAR = "bus_send_avatar";
+		final String BUS_UPDATE_USER = "bus_update_user";
 	}
 }

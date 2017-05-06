@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -20,10 +19,15 @@ import com.qsr.graduationpro.mvp.model.data.User;
 import com.qsr.graduationpro.mvp.model.data.UserNode;
 import com.qsr.graduationpro.mvp.presenter.UserPresenter;
 import com.qsr.graduationpro.mvp.view.AssociateActivity;
+import com.qsr.graduationpro.mvp.view.InfoActivity;
+import com.qsr.graduationpro.ui.UpdatePwd;
+import com.qsr.graduationpro.ui.circleAvatar.CircleTransform;
 import com.qsr.graduationpro.utils.ActivityManager;
 import com.qsr.graduationpro.utils.LogUtil;
 import com.qsr.graduationpro.utils.SPUtil;
-import com.qsr.graduationpro.utils.ToastUtil;
+import com.qsr.graduationpro.utils.TextUtil;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,22 +40,28 @@ import cn.bmob.v3.BmobUser;
 
 public class MainActivity extends BaseActivity {
 
+
+    ImageView mainAvatar;
     @Bind(R.id.mainFrame)
     FrameLayout mainFrame;
     @Bind(R.id.slidingAvatar)
     ImageView slidingAvatar;
-    @Bind(R.id.myPhone)
-    TextView myPhone;
+    @Bind(R.id.changePwd)
+    TextView changePwd;
+    @Bind(R.id.addHalf)
+    TextView addHalf;
     @Bind(R.id.myCV)
     TextView myCV;
     @Bind(R.id.myFamily)
     TextView myFamily;
     @Bind(R.id.myFamous)
     TextView myFamous;
+    @Bind(R.id.myCalled)
+    TextView myCalled;
+    @Bind(R.id.openCheck)
+    TextView openCheck;
     @Bind(R.id.drawer_ll)
     LinearLayout drawerLl;
-
-    ImageView mainAvatar;
     private TextView mainName;
     private TextView mainSex;
     private TextView mainBirth;
@@ -64,10 +74,10 @@ public class MainActivity extends BaseActivity {
     private TextView mainDidi;
 
     private static UserNode userNode;
-    private static User user;
     private static String username;
     private UserPresenter userPresenter;
     private Bundle bundle;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -89,12 +99,14 @@ public class MainActivity extends BaseActivity {
         mainChild = (TextView) view.findViewById(R.id.mainChild);
         mainBor = (TextView) view.findViewById(R.id.mainBor);
         mainDidi = (TextView) view.findViewById(R.id.mainDidi);
+        mainCardView = (CardView) view.findViewById(R.id.mainCardView);
         mainFrame.addView(view);
     }
 
     @Override
     protected void AfterInitView() {
         LoadingShow();
+        openCheck.setText((Boolean) SPUtil.get(Constants.mySP.OPEN_CHECK, true) == true ? "检测已开启" : "检测已关闭");
         UserTool.getInstance().getUser(BmobUser.getCurrentUser(this).getUsername());
         UserTool.getInstance().getUserNode(BmobUser.getCurrentUser(this).getUsername());
     }
@@ -119,52 +131,55 @@ public class MainActivity extends BaseActivity {
     }
 
     //刷新当前主界面 根据当前userNode信息刷新界面
-    private void refreshUI() {
+    private void refreshUI(User user) {
+//        user = gson.fromJson((String) SPUtil.get(Constants.mySP.CURRENT_USER, ""), User.class);
+        if (user.getUsername().equals(BmobUser.getCurrentUser(this).getUsername()))
+            Picasso.with(this).load(user.getAvatar())//设置不缓存
+                    .networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.mipmap.icon).transform(new CircleTransform()).into(slidingAvatar);
+        Picasso.with(this).load(user.getAvatar())//设置不缓存
+                .networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.mipmap.icon).transform(new CircleTransform()).into(mainAvatar);
+
         String aaa;
-        if(user.getRealName() == null) {
-            mainName.setText("姓名：未知");
-        }else
+        if (user.getRealName() == null) {
+            mainName.setText("姓名：暂未填写");
+        } else
             mainName.setText("姓名：" + user.getRealName());
-        if(user.getSex() == null) {
-            mainSex.setText("性别：未知");
-        }else {
+        if (user.getSex() == null) {
+            mainSex.setText("性别：暂未填写");
+        } else {
             aaa = user.getSex() == 1 ? "男" : "女";
             mainSex.setText("性别：" + aaa);
         }
-        if(user.getBirthday() == null) {
-            mainBirth.setText("生日：未知");
-        }else
+        if (user.getBirthday() == null) {
+            mainBirth.setText("生日：暂未填写");
+        } else
             mainBirth.setText("生日：" + user.getBirthday());
-        //加载对话框消失
-        LoadingDismiss();
     }
 
     @Override
     public void MyOnClick(View v) {
-        LoadingShow();
         switch (v.getId()) {
             case R.id.mainDidi://点击弟弟
-                ToastUtil.showShort("点击弟弟");
                 checkIsExist(Constants.relativeCode.DIDI);
                 break;
             case R.id.mainBor://点击哥哥
-                ToastUtil.showShort("点击哥哥");
                 checkIsExist(Constants.relativeCode.GEGE);
                 break;
             case R.id.mainFather://点击父亲
-                ToastUtil.showShort("点击父亲");
                 checkIsExist(Constants.relativeCode.FUQIN);
                 break;
             case R.id.mainChild://点击孩子
-                ToastUtil.showShort("点击孩子");
                 checkIsExist(Constants.relativeCode.ZHANGZI);
+                break;
+            case R.id.mainCardView://点击卡片
+                ActivityManager.getInstance().startAct(this, new InfoActivity(), false);
                 break;
         }
     }
 
     //检查该用户是否存在
     private void checkIsExist(final int person) {
-        userNode = gson.fromJson((String)SPUtil.get(Constants.mySP.USERNODE,""),UserNode.class);
+        userNode = gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class);
         String doUser = "";
         switch (person) {
             case Constants.relativeCode.DIDI://点击了弟弟
@@ -180,9 +195,10 @@ public class MainActivity extends BaseActivity {
                 doUser = userNode.getEldestSon() == null ? "isEmpty" : userNode.getEldestSon();
                 break;
         }
-        if("isEmpty".equals(doUser) || "".equals(doUser) || doUser == null){
+        if ("isEmpty".equals(doUser) || "".equals(doUser) || doUser == null) {
             showMyDialog(person);
-        }else {
+        } else {
+            LoadingShow();
             UserTool.getInstance().getUser(doUser);
             UserTool.getInstance().getUserNode(doUser);
         }
@@ -224,41 +240,68 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getMes(Action action) {
         if (Constants.enevtBus.BUS_MAIN_USER.equals(action.getEvent())) {
-            LogUtil.MyLog_e("主界面收到了刷新界面用户的eventbus");
             user = (User) action.getResultData();
-            refreshUI();
-        }else if(Constants.enevtBus.BUS_REFRESH.equals(action.getEvent())){
-            LogUtil.MyLog_e(this,"接收到刷新界面要求");
-            UserTool.getInstance().getUser(userNode.getMySelf());
-            UserTool.getInstance().getUserNode(userNode.getMySelf());
+            LogUtil.MyLog_e("主界面收到了刷新界面用户的eventbus" + user.toString());
+            refreshUI((User) action.getResultData());
+        } else if (Constants.enevtBus.BUS_REFRESH.equals(action.getEvent())) {
+            LogUtil.MyLog_e(this, "接收到刷新界面要求");
+            UserTool.getInstance().getUser(BmobUser.getCurrentUser(this).getUsername());
+            UserTool.getInstance().getUserNode(BmobUser.getCurrentUser(this).getUsername());
             LoadingShow();
-        } else if(Constants.enevtBus.BUS_MAIN_USERNODE.equals(action.getEvent())){
-            LogUtil.MyLog_e(this,"主界面收到了对应结点信息");
-            hindFather((UserNode)action.getResultData());
+        } else if (Constants.enevtBus.BUS_MAIN_USERNODE.equals(action.getEvent())) {
+            LogUtil.MyLog_e(this, "主界面收到了对应结点信息");
+            hindFather((UserNode) action.getResultData());
         }
     }
 
     //当该用户不是长子时候，取消父亲的可见性
     private void hindFather(UserNode resultData) {
-        if(resultData.getGgorjj() == null && resultData.getFather() ==null){
+        if (TextUtil.MyIsEmpty(resultData.getGgorjj()) && TextUtil.MyIsEmpty(resultData.getFather())) {
             mainFather.setVisibility(View.VISIBLE);
             mainBor.setVisibility(View.VISIBLE);
         }
-        if(resultData.getGgorjj()!=null){
+        if (!TextUtil.MyIsEmpty(resultData.getGgorjj()) && TextUtil.MyIsEmpty(resultData.getFather())) {
             mainFather.setVisibility(View.INVISIBLE);
             mainBor.setVisibility(View.VISIBLE);
         }
-        if (resultData.getFather() != null) {
+        if (TextUtil.MyIsEmpty(resultData.getGgorjj()) && !TextUtil.MyIsEmpty(resultData.getFather())) {
             mainBor.setVisibility(View.INVISIBLE);
             mainFather.setVisibility(View.VISIBLE);
         }
+        //加载对话框消失
+        LoadingDismiss();
     }
 
-    private void LoadingShow(){
+    private void LoadingShow() {
         linearLayout.setVisibility(View.VISIBLE);
     }
-    private void LoadingDismiss(){
-        linearLayout.setVisibility(View.GONE);
+
+    private void LoadingDismiss() {
+        try {
+            Thread.sleep(500);
+            linearLayout.setVisibility(View.GONE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
+
+    //开启或者关闭版本检测
+    public void changeCheck(View view) {
+        Boolean state = (Boolean) SPUtil.get(Constants.mySP.OPEN_CHECK, true) == true ? false : true;
+        SPUtil.put(Constants.mySP.OPEN_CHECK, state);
+        if ((Boolean) SPUtil.get(Constants.mySP.OPEN_CHECK, true)) {
+            LogUtil.MyLog_e("版本检测已经开启，sp内容是：" + (Boolean) SPUtil.get(Constants.mySP.OPEN_CHECK, true));
+            openCheck.setText("检测已开启");
+        } else {
+            LogUtil.MyLog_e("版本检测已经关闭，sp内容是：" + (Boolean) SPUtil.get(Constants.mySP.OPEN_CHECK, true));
+            openCheck.setText("检测已关闭");
+        }
+    }
+
+    //更改密码
+    public void changePwd(View view) {
+        UpdatePwd updatePwd = new UpdatePwd(MainActivity.this);
+        updatePwd.show();
+    }
 }

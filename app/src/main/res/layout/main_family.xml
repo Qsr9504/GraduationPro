@@ -6,7 +6,6 @@
     android:gravity="center">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,31 +26,39 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_margin="10dp"
-                android:padding="30dp"
-                app:cardBackgroundColor="@color/backgroundGray">
+                android:clickable="true"
+                android:onClick="MyOnClick"
+                android:padding="20dp"
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@mipmap/card_bg"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center">
 
                         <ImageView
                             android:id="@+id/mainAvatar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="10dp"
                             android:src="@mipmap/icon" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_margin="10dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -85,7 +92,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:onClick="MyOnClick"
-                android:text="父亲" />
+                android:text="父亲"
+                />
 
             <TextView
                 android:id="@+id/mainChild"
@@ -118,35 +126,39 @@
                 android:text="弟弟" />
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/loadingviewll"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:background="@color/qtransparent"
+        android:clickable="true"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <LinearLayout
-            android:background="@color/btransparent"
-            android:layout_gravity="center"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/btransparent"
+            android:orientation="vertical">
+
             <com.wang.avi.AVLoadingIndicatorView
-                android:layout_margin="10dp"
                 android:id="@+id/loadingview"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_margin="10dp"
                 app:indicatorColor="@color/white"
                 app:indicatorName="PacmanIndicator" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:layout_margin="10dp"
-                android:text="正在加载"/>
+                android:text="正在加载"
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 

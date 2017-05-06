@@ -11,6 +11,10 @@
     <string name="footer_personal_pic">&#xe67e;</string>
     <string name="footer_personal_text">个人</string>
 
+    <string name="back">&#xe6cb;</string>
+    <string name="edit">&#xe659;</string>
+    <string name="done">&#xe6c5;</string>
+
     <!--  动画 加载 -->
     <string name="BallPulseIndicator">BallPulseIndicator</string>
     <string name="BallGridPulseIndicator">BallGridPulseIndicator</string>

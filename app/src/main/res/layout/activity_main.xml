@@ -15,7 +15,7 @@
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#993366"
+        android:background="@color/gold"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="5dp">
@@ -28,18 +28,13 @@
             android:orientation="vertical">
 
             <ImageView
+                android:layout_marginTop="20dp"
                 android:id="@+id/slidingAvatar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@color/colorPrimary"/>
+                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="乔思荣"
-                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -50,12 +45,22 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/myPhone"
+                android:id="@+id/changePwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
-                android:text="我的手机"
+                android:text="更改密码"
+                android:clickable="true"
+                android:onClick="changePwd"
+                android:textSize="25sp"/>
+            <TextView
+                android:id="@+id/addHalf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:text="添加配偶"
                 android:textSize="25sp"/>
 
             <TextView
@@ -83,6 +88,24 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
                 android:text="家族名人堂"
+                android:textSize="25sp"/>
+
+            <TextView
+                android:id="@+id/myCalled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:text="称谓计算器"
+                android:textSize="25sp"/>
+            <TextView
+                android:id="@+id/openCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:onClick="changeCheck"
+                android:clickable="true"
+                android:layout_marginTop="10dp"
                 android:textSize="25sp"/>
         </LinearLayout>
     </LinearLayout>

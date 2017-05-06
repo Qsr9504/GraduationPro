@@ -101,22 +101,45 @@ public class AssociateTool extends BaseTool {
             }
         });
     }
-    private void addAsso3(final String user1, String user2, UserNode userNode1, final UserNode userNode2, int type){
+    private void addAsso3(final String user1, final String user2, final UserNode userNode1, final UserNode userNode2,final int type){
+        String userNode1Tar = userNode1.getMySelf().equals(user1)?user2:user1;
+        String userNode2Tar = userNode2.getMySelf().equals(user2)?user1:user2;
         if(type == Constants.relativeCode.DIDI){
-            userNode1.setMmordd(user2);
-            userNode2.setGgorjj(user1);
+            if(userNode1.getMySelf().equals(user1)){
+                userNode1.setMmordd(userNode1Tar);
+                userNode2.setGgorjj(userNode2Tar);
+            }else {
+                userNode2.setMmordd(userNode2Tar);
+                userNode1.setGgorjj(userNode1Tar);
+            }
         }else if(type == Constants.relativeCode.GEGE){
-            userNode1.setGgorjj(user2);
-            userNode2.setMmordd(user1);
+            if(userNode1.getMySelf().equals(user1)){
+                userNode1.setGgorjj(userNode1Tar);
+                userNode2.setMmordd(userNode2Tar);
+            }else {
+                userNode2.setGgorjj(userNode2Tar);
+                userNode1.setMmordd(userNode1Tar);
+            }
         }else if(type == Constants.relativeCode.FUQIN){
-            userNode1.setFather(user2);
-            userNode2.setEldestSon(user1);
+            LogUtil.MyLog_e("为"+user1+"设置父亲"+userNode1Tar);
+            if(userNode1.getMySelf().equals(user1)){
+                userNode1.setFather(userNode1Tar);
+                userNode2.setEldestSon(userNode2Tar);
+            }else {
+                userNode2.setFather(userNode2Tar);
+                userNode1.setEldestSon(userNode1Tar);
+            }
         }else if(type == Constants.relativeCode.ZHANGZI){
-            userNode1.setEldestSon(user2);
-            userNode2.setFather(user1);
+            if(userNode1.getMySelf().equals(user1)){
+                userNode1.setEldestSon(userNode1Tar);
+                userNode2.setFather(userNode2Tar);
+            }else {
+                userNode2.setEldestSon(userNode2Tar);
+                userNode1.setFather(userNode1Tar);
+            }
         }else if(type == Constants.relativeCode.QIZI){
-            userNode1.setHalf(user2);
-            userNode2.setHalf(user1);
+            userNode1.setHalf(userNode1Tar);
+            userNode2.setHalf(userNode2Tar);
         }
         userNode1.update(context, userNode1.getObjectId(), new UpdateListener() {
             @Override
@@ -132,13 +155,15 @@ public class AssociateTool extends BaseTool {
 
                     @Override
                     public void onFailure(int code, String msg) {
-
+                        LogUtil.MyLog_e("第二个用户更新失败");
+                        addAsso3(user1,user2,userNode1,userNode2,type);
                     }
                 });
             }
             @Override
             public void onFailure(int code, String msg) {
-
+                LogUtil.MyLog_e("第一个用户结点更新失败");
+                addAsso3(user1,user2,userNode1,userNode2,type);
             }
         });
 

@@ -20,11 +20,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**************************************
  * FileName : com.qsr.graduationpro.bmobUtils
@@ -113,7 +115,21 @@ public class UserTool extends BaseTool{
 		});
 	}
 
+	//更新用户
+	public void updateUser(User user){
+		action = new Action(Constants.enevtBus.BUS_UPDATE_USER);
+		user.update(context, user.getObjectId(), new UpdateListener() {
+			@Override
+			public void onSuccess() {
+				EventBus.getDefault().post(action);
+			}
 
+			@Override
+			public void onFailure(int i, String s) {
+				LogUtil.MyLog_e("用户更新失败"+s);
+			}
+		});
+	}
 	//查询结点
 	public void getUserNode(final String username){
 		BmobQuery<UserNode> query = new BmobQuery<UserNode>();
@@ -121,10 +137,11 @@ public class UserTool extends BaseTool{
 		query.findObjects(context,new FindListener<UserNode>(){
 			@Override
 			public void onSuccess(List<UserNode> list) {
-				LogUtil.MyLog_e("根据用户名称查询到该节点数量为："+list.size()+"节点内容是="+list.toString());
+				LogUtil.MyLog_e("根据用户名"+username+"称查询到该节点数量为："+list.size()+"节点内容是="+list.toString());
 				if(list.size() == 0){
 					getUserNode(username);
 				}else {
+					//结点保存本地，供检查关系存在与否
 					SPUtil.put(Constants.mySP.USERNODE,gson.toJson(list.get(0)));
 					action.setEvent(Constants.enevtBus.BUS_MAIN_USERNODE);
 					action.setResultData(list.get(0));
@@ -140,7 +157,7 @@ public class UserTool extends BaseTool{
 	}
 	//查询用户
 	public void getUser(final String username){
-		LogUtil.MyLog_e("正在根据用户名查询当前用户信息");
+		LogUtil.MyLog_e("正在根据用户名查询当前用户信息" + username);
 		BmobQuery<User> query = new BmobQuery<User>();
 		query.addWhereEqualTo("username", username);
 		query.findObjects(context,new FindListener<User>() {
@@ -149,13 +166,39 @@ public class UserTool extends BaseTool{
 				action.setEvent(Constants.enevtBus.BUS_MAIN_USER);
 				if(list.size() == 0)
 					getUser(username);
-				action.setResultData(list.get(0));
-				EventBus.getDefault().post(action);
+				else {
+					//当前用户保存起来
+					SPUtil.put(Constants.mySP.CURRENT_USER,gson.toJson(list.get(0)));
+					action.setResultData(list.get(0));
+					EventBus.getDefault().post(action);
+				}
 			}
 
 			@Override
 			public void onError(int i, String s) {
 				LogUtil.MyLog_e("登录获取用户发生错误"+s);
+			}
+		});
+	}
+	public void getUserInfo(final String username){
+		LogUtil.MyLog_e("正在根据用户名查询当前用户信息");
+		BmobQuery<User> query = new BmobQuery<User>();
+		query.addWhereEqualTo("username", username);
+		query.findObjects(context,new FindListener<User>() {
+			@Override
+			public void onSuccess(List<User> list) {
+				action.setEvent(Constants.enevtBus.BUS_USERINFO);
+				if(list.size() == 0)
+					getUserInfo(username);
+				else {
+					action.setResultData(list.get(0));
+					EventBus.getDefault().post(action);
+				}
+			}
+
+			@Override
+			public void onError(int i, String s) {
+				LogUtil.MyLog_e("获取用户发生错误"+s);
 			}
 		});
 	}

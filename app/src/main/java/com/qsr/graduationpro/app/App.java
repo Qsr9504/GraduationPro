@@ -47,5 +47,4 @@ public class App extends Application {
 		//网络切换监听器
 	}
 
-
 }

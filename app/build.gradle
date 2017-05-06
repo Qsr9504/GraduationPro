@@ -40,5 +40,11 @@ dependencies {
     compile 'io.github.openfeign:feign-gson:9.4.0'
     //动画 加载https://github.com/81813780/AVLoadingIndicatorView
     compile 'com.wang.avi:library:2.1.3'
-
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //头像加载器
+    compile 'com.yuyh.imgsel:library:1.3.8'
+    //特效文字
+    String htextview_version = "0.1.1"
+    compile "com.hanks:htextview-base:$htextview_version"
+    compile "com.hanks:htextview-line:$htextview_version"
 }
