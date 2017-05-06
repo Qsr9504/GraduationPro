@@ -9,7 +9,7 @@ import cn.bmob.v3.BmobObject;
  * Description : 履历的实体类
  **************************************/
 public class Record extends BmobObject {
-	private User recordOwner;//履历主人（外键）
+	private String recordOwner;//履历主人（外键）
 	private String recordContent;//履历详细内容
 	private String recordTime;//履历发生时间
 	private String recordType;//履历类型
@@ -17,15 +17,15 @@ public class Record extends BmobObject {
 
 	public Record() {}
 
-	public Record(User recordOwner) {
+	public Record(String recordOwner) {
 		this.recordOwner = recordOwner;
 	}
 
-	public User getRecordOwner() {
+	public String getRecordOwner() {
 		return recordOwner;
 	}
 
-	public void setRecordOwner(User recordOwner) {
+	public void setRecordOwner(String recordOwner) {
 		this.recordOwner = recordOwner;
 	}
 

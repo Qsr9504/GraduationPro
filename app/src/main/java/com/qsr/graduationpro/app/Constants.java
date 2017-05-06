@@ -46,5 +46,7 @@ public class Constants {
 		final String BUS_USERINFO = "bus_userinfo";
 		final String BUS_SEND_AVATAR = "bus_send_avatar";
 		final String BUS_UPDATE_USER = "bus_update_user";
+		final String BUS_GETCV = "bus_get_cv";
+		final String BUS_REFRESH_CV = "bus_refresh_cv";
 	}
 }

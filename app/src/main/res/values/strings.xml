@@ -14,6 +14,7 @@
     <string name="back">&#xe6cb;</string>
     <string name="edit">&#xe659;</string>
     <string name="done">&#xe6c5;</string>
+    <string name="add">&#xe6f5;</string>
 
     <!--  动画 加载 -->
     <string name="BallPulseIndicator">BallPulseIndicator</string>

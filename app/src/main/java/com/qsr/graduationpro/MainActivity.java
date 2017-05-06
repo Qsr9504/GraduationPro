@@ -21,6 +21,7 @@ import com.qsr.graduationpro.mvp.model.data.UserNode;
 import com.qsr.graduationpro.mvp.presenter.UserPresenter;
 import com.qsr.graduationpro.mvp.view.AssociateActivity;
 import com.qsr.graduationpro.mvp.view.CallcalculateActivity;
+import com.qsr.graduationpro.mvp.view.CvActivity;
 import com.qsr.graduationpro.mvp.view.FameActivity;
 import com.qsr.graduationpro.mvp.view.InfoActivity;
 import com.qsr.graduationpro.mvp.view.LoginActivity;
@@ -31,6 +32,7 @@ import com.qsr.graduationpro.utils.ActivityManager;
 import com.qsr.graduationpro.utils.LogUtil;
 import com.qsr.graduationpro.utils.SPUtil;
 import com.qsr.graduationpro.utils.TextUtil;
+import com.qsr.graduationpro.utils.ToastUtil;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -43,7 +45,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.bmob.v3.BmobUser;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnLongClickListener{
 
 
     ImageView mainAvatar;
@@ -105,6 +107,7 @@ public class MainActivity extends BaseActivity {
         mainBor = (TextView) view.findViewById(R.id.mainBor);
         mainDidi = (TextView) view.findViewById(R.id.mainDidi);
         mainCardView = (CardView) view.findViewById(R.id.mainCardView);
+        mainCardView.setOnLongClickListener(this);
         mainFrame.addView(view);
     }
 
@@ -138,16 +141,15 @@ public class MainActivity extends BaseActivity {
     //刷新当前主界面 根据当前userNode信息刷新界面
     private void refreshUI(User user) {
 //        user = gson.fromJson((String) SPUtil.get(Constants.mySP.CURRENT_USER, ""), User.class);
-        if (user.getUsername().equals(BmobUser.getCurrentUser(this).getUsername()))
+        if (user.getUsername().equals(BmobUser.getCurrentUser(this).getUsername())){//如果不是当前用户，不再更新侧滑中按钮
             Picasso.with(this).load(user.getAvatar())//设置不缓存
                     .networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.mipmap.icon).transform(new CircleTransform()).into(slidingAvatar);
+            if (gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class).getHalf() != null) {
+                addHalf.setVisibility(View.GONE);
+            }
+        }
         Picasso.with(this).load(user.getAvatar())//设置不缓存
                 .networkPolicy(NetworkPolicy.NO_CACHE).placeholder(R.mipmap.icon).transform(new CircleTransform()).into(mainAvatar);
-        if (gson.fromJson((String) SPUtil.get(Constants.mySP.USERNODE, ""), UserNode.class).getHalf() == null) {
-            addHalf.setVisibility(View.VISIBLE);
-        } else {
-            addHalf.setVisibility(View.GONE);
-        }
         String aaa;
         if (user.getRealName() == null) {
             mainName.setText("姓名：暂未填写");
@@ -345,5 +347,13 @@ public class MainActivity extends BaseActivity {
         }
         if(activity!=null)
             ActivityManager.getInstance().startAct(this,activity,false);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        ToastUtil.showShort("长按啦！");
+        ActivityManager.getInstance().startAct(this,new CvActivity(),false);
+        //返回true消费掉此次点击事件
+        return true;
     }
 }

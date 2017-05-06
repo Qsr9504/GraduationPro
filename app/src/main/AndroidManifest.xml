@@ -53,7 +53,8 @@
         <activity android:name=".mvp.view.InfoActivity" />
         <activity android:name=".mvp.view.CallcalculateActivity" />
         <activity android:name=".mvp.view.FameActivity" />
-        <activity android:name=".mvp.view.QmessActivity"></activity>
+        <activity android:name=".mvp.view.QmessActivity" />
+        <activity android:name=".mvp.view.CvActivity"></activity>
     </application>
 
 </manifest>

@@ -49,4 +49,6 @@ dependencies {
     compile "com.hanks:htextview-line:$htextview_version"
     //流式文本框
     compile 'com.github.deano2390:FlowTextView:2.0.5'
+    //瀑布流
+    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
 }
